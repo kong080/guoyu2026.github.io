@@ -246,7 +246,7 @@ function dots(html){
 function cardHTML(p){
   let shot;
   if(p.img.length){
-    let imgs=p.img.map((s,i)=>`<img src="${s}" loading="lazy" onpointerup="sw(this)">`).join("");
+    let imgs=p.img.map((s,i)=>`<img src="${s}?v=2" loading="lazy" decoding="async" onpointerup="sw(this)">`).join("");
     shot=`<div class="cshot"><div class="imgs">${imgs}</div>${p.img.length>1?`<div class="dots">${dots(p.img.length)}</div>`:""}</div>`;
   }else{
     shot=`<div class="cshot"><div class="placeholder">
@@ -378,7 +378,7 @@ function g(title,color,content){
     if(typeof item==="string"){ b+=`<p>${item}</p>`; }
     else if(item.tbl){ b+=`<table class="tbl">`+item.tbl.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")+`</table>`; }
     else if(item.img){
-      const figs=item.img.map((f,i)=>`<figure${f.length===1?' class="one"':''}><img src="guide/${f}" loading="lazy"><figcaption>${f.length===1?esc(item.cap||""):i===0?esc(item.cap||""):""}</figcaption></figure>`).join("");
+      const figs=item.img.map((f,i)=>`<figure${f.length===1?' class="one"':''}><img src="guide/${f}?v=2" loading="lazy" decoding="async"><figcaption>${f.length===1?esc(item.cap||""):i===0?esc(item.cap||""):""}</figcaption></figure>`).join("");
       b+=`<div class="gimg">${figs}</div>`;
     }
   });
