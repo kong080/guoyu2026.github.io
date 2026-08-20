@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08435F">
+<title>国誉博 2026 · 上海 · 好奇博物馆</title>
+<style>
+:root{
+  --navy:#08435F; --navy2:#0b4d6c; --dk:#05283a;
+  --gold:#C49C17; --gold2:#a88415; --goldL:#e8d192;
+  --cream:#FDF7E5; --cream2:#f7eeda;
+  --green:#2B6F61; --ink:#23313a; --sub:#717c72;
+  --line:#e7dfca;
+  --r:16px; --r2:12px;
+  --shadow:0 1px 0 rgba(8,67,95,.04);
+  --stars:radial-gradient(1.5px 1.5px at 20% 30%, rgba(255,244,214,.55) 50%, transparent 51%),
+          radial-gradient(1px 1px at 60% 16%, rgba(255,244,214,.45) 50%, transparent 51%),
+          radial-gradient(1.2px 1.2px at 82% 40%, rgba(255,244,214,.5) 50%, transparent 51%),
+          radial-gradient(1px 1px at 38% 62%, rgba(255,244,214,.4) 50%, transparent 51%),
+          radial-gradient(1.4px 1.4px at 12% 70%, rgba(255,244,214,.4) 50%, transparent 51%),
+          radial-gradient(1px 1px at 92% 72%, rgba(255,244,214,.42) 50%, transparent 51%),
+          radial-gradient(1px 1px at 50% 84%, rgba(255,244,214,.4) 50%, transparent 51%),
+          radial-gradient(1.2px 1.2px at 26% 48%, rgba(255,244,214,.5) 50%, transparent 51%),
+          radial-gradient(1px 1px at 72% 6%, rgba(255,244,214,.35) 50%, transparent 51%);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--cream);color:var(--ink);
+  font-family:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;letter-spacing:.01em}
+.app{max-width:640px;margin:0 auto;padding-bottom:92px;position:relative}
+
+/* ===== 顶部 星空展馆 ===== */
+.hero{position:relative;background:
+  radial-gradient(120% 90% at 50% -10%, #0a5678 0%, var(--navy) 42%, var(--dk) 100%);
+  color:var(--cream);padding:26px 20px 22px;overflow:hidden;border-radius:0 0 30px 30px}
+.hero::before{content:"";position:absolute;inset:0;background:var(--stars);
+  background-size:320px 240px;opacity:.9;pointer-events:none}
+.hero::after{content:"";position:absolute;left:10%;right:10%;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--goldL) 30%,var(--gold) 50%,var(--goldL) 70%,transparent)}
+.hero .hrow{position:relative;text-align:center}
+.hero .kicker{font-size:11px;letter-spacing:.42em;color:var(--goldL);font-weight:600;margin-bottom:8px;
+  display:flex;align-items:center;justify-content:center;gap:10px}
+.hero .kicker::before,.hero .kicker::after{content:"◆";font-size:8px;color:var(--gold);letter-spacing:0}
+.hero h1{margin:0 0 4px;font-size:26px;font-weight:800;letter-spacing:.12em;color:#fff}
+.hero .sub{margin:0 0 18px;font-size:12.5px;color:rgba(253,247,229,.72);letter-spacing:.18em}
+.hero .star1,.hero .star2,.hero .star3{position:absolute;color:var(--goldL);opacity:.85;pointer-events:none}
+.hero .star1{top:16px;left:18px;font-size:10px;animation:tw 3s ease-in-out infinite}
+.hero .star2{top:22px;right:26px;font-size:8px;animation:tw 2.6s 1s ease-in-out infinite}
+.hero .star3{bottom:44px;left:34%;font-size:9px;animation:tw 3.4s .6s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* 搜索 展馆入场券 */
+.search{position:relative;margin-top:6px;display:flex;align-items:center;gap:9px;
+  background:var(--cream);border:1px solid var(--gold);border-radius:999px;padding:10px 15px;
+  box-shadow:0 4px 0 rgba(5,40,58,.28)}
+.search svg{flex:none;color:var(--gold2)}
+.search input{border:0;outline:0;background:transparent;font-size:14.5px;width:100%;color:var(--ink)}
+.search input::placeholder{color:#b4ab93}
+.search .q{font-size:11px;color:var(--gold2);white-space:nowrap;font-weight:600}
+
+/* ===== 筛选 ===== */
+.filters{padding:10px 16px 6px;position:sticky;top:0;z-index:45;
+  background:linear-gradient(var(--cream) 88%, rgba(253,247,229,.0));backdrop-filter:blur(6px)}
+.row{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;-ms-overflow-style:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:6.5px 14px;border-radius:999px;border:1px solid rgba(8,67,95,.28);background:transparent;
+  font-size:12.5px;color:var(--navy);cursor:pointer;transition:all .15s;font-weight:600;letter-spacing:.02em}
+.chip.on{background:var(--navy);color:var(--cream);border-color:var(--navy);box-shadow:0 2px 6px rgba(8,67,95,.25)}
+.chip.spec{border-color:rgba(43,111,97,.4);color:var(--green);background:rgba(43,111,97,.05)}
+.chip.spec.on{background:var(--green);color:#f4f9f2;border-color:var(--green);box-shadow:0 2px 6px rgba(43,111,97,.25)}
+.fhint{font-size:11px;color:var(--sub);padding:0 2px 2px;margin-top:-2px}
+
+/* ===== 品牌 展牌 ===== */
+.group{margin:6px 14px 18px}
+.ghead{display:flex;align-items:center;gap:10px;padding:18px 4px 12px;cursor:pointer;user-select:none}
+.ghead .ln{flex:0 0 34px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));opacity:.75}
+.ghead .ln.r{transform:rotate(180deg)}
+.ghead .diamond{color:var(--gold);font-size:9px;flex:none}
+.ghead .gt{flex:1;text-align:center;min-width:0}
+.ghead .gt .bn{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:.06em;line-height:1.2;
+  display:inline-flex;align-items:baseline;gap:8px}
+.ghead .gt .bn .g{color:var(--gold);font-size:14px}
+.ghead .gt .sn{font-size:11px;color:var(--sub);margin-top:3px;letter-spacing:.05em}
+.ghead .cnt{font-size:11px;color:var(--gold2);flex:none;background:rgba(196,156,23,.12);
+  border:1px solid rgba(196,156,23,.35);padding:2.5px 9px;border-radius:999px;font-weight:600}
+
+/* ===== 网格 展柜 ===== */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.card{background:#fffdf6;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  box-shadow:var(--shadow)}
+.cshot{position:relative;aspect-ratio:1/1;background:#efe8d6}
+.cshot .imgs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:100%;scrollbar-width:none}
+.cshot .imgs::-webkit-scrollbar{display:none}
+.cshot .imgs img{width:100%;flex:none;height:100%;object-fit:cover;scroll-snap-align:start;background:#efe8d6}
+/* 无图占位 展品待陈列 */
+.placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(155deg,var(--navy) 0%,var(--navy2) 52%,var(--green) 130%);color:var(--cream);
+  text-align:center;padding:12px;position:relative;overflow:hidden}
+.placeholder::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(1.4px 1.4px at 18% 22%, rgba(255,244,214,.5) 50%, transparent 51%),
+  radial-gradient(1px 1px at 74% 34%, rgba(255,244,214,.42) 50%, transparent 51%),
+  radial-gradient(1.2px 1.2px at 44% 78%, rgba(255,244,214,.4) 50%, transparent 51%),
+  radial-gradient(1px 1px at 88% 70%, rgba(255,244,214,.4) 50%, transparent 51%);
+  background-size:180px 140px}
+.placeholder .big{font-size:34px;font-weight:800;color:var(--goldL);opacity:1;position:relative}
+.placeholder .ring{width:46px;height:46px;border:1px dashed rgba(232,209,146,.6);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;position:relative}
+.placeholder .sm{font-size:11px;opacity:.9;margin-top:8px;line-height:1.35;color:var(--cream);
+  position:relative;padding:0 8px;letter-spacing:.02em}
+.dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:4px}
+.dots i{width:5px;height:5px;border-radius:50%;background:rgba(8,67,95,.28);transition:.2s}
+.dots i.on{background:var(--gold);transform:scale(1.35)}
+.badge{position:absolute;left:8px;top:8px;background:var(--gold);color:#fffdf6;font-size:10px;font-weight:700;
+  padding:3.5px 8px;border-radius:7px;letter-spacing:.03em}
+.cbody{padding:10px 12px 12px;background:#fffdf6}
+.cname{font-size:13.5px;font-weight:700;line-height:1.38;min-height:38px;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cprice{margin-top:6px;font-size:11px;color:var(--sub);min-height:20px;display:flex;align-items:baseline}
+.cprice b{color:var(--gold2);font-size:17px;font-weight:800;margin-left:2px}
+.cprice .yen{color:var(--gold2);font-size:12px;font-weight:800}
+.cprice .flag{color:var(--green);font-weight:700}
+.cprice s{opacity:.5;margin-left:6px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;max-height:44px;overflow:hidden}
+.tag{font-size:10.5px;line-height:1;padding:4.5px 8px;border-radius:7px;font-weight:600;color:var(--navy);
+  background:rgba(8,67,95,.07);border:1px solid rgba(8,67,95,.12)}
+.tag.c{color:#fff;border:0}
+.cnote{margin-top:7px;font-size:11px;color:var(--sub);line-height:1.45}
+
+/* ===== 攻略 手册 ===== */
+.guide{padding:6px 14px}
+.gcard{background:#fffdf6;border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden;
+  box-shadow:var(--shadow)}
+.gcard .gh{padding:13px 14px 11px;font-size:15px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:9px;
+  border-bottom:1px dashed var(--line)}
+.gcard .gh .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.gcard .gb{padding:12px 14px 14px}
+.gcard .gb h5{margin:0 0 3px;font-size:12px;color:var(--gold2);font-weight:800;letter-spacing:.04em}
+.gcard .gb p{margin:0 0 8px;font-size:13px;line-height:1.62;color:var(--ink)}
+.gcard .gb .rowt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.gcard .gb .pil{padding:5px 9px;border-radius:8px;background:rgba(8,67,95,.06);font-size:11.5px;color:var(--navy)}
+.gcard .gb .tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.gcard .gb .tbl td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.gcard .gb .tbl td:first-child{color:var(--gold2);font-weight:800;white-space:nowrap;padding-right:8px}
+.gcard .heat{font-size:11px;color:var(--sub);margin-top:2px}
+.gimg{display:flex;gap:6px;margin:10px 0 2px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.gimg::-webkit-scrollbar{display:none}
+.gimg figure{flex:none;margin:0;width:74%;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;background:#f2eada}
+.gimg figure img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#f2eada}
+.gimg figure.one{width:100%}
+.gimg figcaption{font-size:11px;color:var(--sub);padding:5px 9px 7px;line-height:1.35;background:#fffdf6}
+
+.empty{text-align:center;color:var(--sub);font-size:13px;padding:48px 20px}
+.empty::before{content:"◆  ";color:var(--gold);font-size:11px}
+
+/* ===== 底部 导航 阶梯 ===== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:60;max-width:640px;margin:0 auto;padding:0 12px 12px;
+  pointer-events:none}
+.nav .bar{pointer-events:auto;background:linear-gradient(180deg,var(--navy),var(--dk));
+  border:1px solid rgba(232,209,146,.18);border-radius:18px;box-shadow:0 6px 18px rgba(5,40,58,.35);
+  display:flex;padding:6px}
+.nav button{flex:1;border:0;background:transparent;padding:7px 0 6px;cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;gap:3px;color:rgba(253,247,229,.55);border-radius:13px;transition:all .18s}
+.nav button.on{color:#fffdf6;background:rgba(196,156,23,.22)}
+.nav button .n{font-size:10.5px;font-weight:600;letter-spacing:.03em}
+.nav button.on .n{color:var(--goldL)}
+.nav button svg{width:21px;height:21px}
+.nav button:first-child svg{width:23px;height:23px}
+
+@media (prefers-reduced-motion:reduce){
+  .hero .star1,.hero .star2,.hero .star3{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <span class="star1">✦</span><span class="star2">✧</span><span class="star3">✦</span>
+    <div class="hrow">
+      <div class="kicker">CURIOUS MUSEUM</div>
+      <h1>国誉博 2026 · 上海</h1>
+      <p class="sub">现场价目 · 藏品陈列册</p>
+      <div class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="搜索品牌 / 商品 / 关键词">
+        <div class="q" id="qcount"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="filters" id="filters"></div>
+  <div id="content"></div>
+</div>
+
+<nav class="nav" id="nav"><div class="bar">
+  <button data-z="限定" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 4.6 5 .7-3.6 3.5.9 5L12 14.7 7.5 16.8l.9-5L4.8 8.3l5-.7z"/></svg><span class="n">限定</span></button>
+  <button data-z="联名"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l4-4 4 4M8 16l4 4 4-4M4 8h4M4 16h4M16 8h4M16 16h4"/></svg><span class="n">联名</span></button>
+  <button data-z="代理"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="n">代理品牌</span></button>
+  <button data-z="攻略"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19V6a2 2 0 0 1 2-2h12v14H7a2 2 0 0 0-2 2zM7 3v15"/></svg><span class="n">攻略</span></button>
+</div></nav>
+
+<script>
+const DATA = [{"z": "限定", "brand": "KOKUYO限定", "series": "HAKU", "name": "2026 HAKU主题限定套装", "cat": "本册", "sub": "限定套装", "spec": "螺旋本·无线装订本", "col": "A5螺旋/ A6无线", "pr": 45, "img": [], "note": "A5 40页双螺旋 + A6 无线本 + 中性笔 + 束口袋"}, {"z": "限定", "brand": "KOKUYO限定", "series": "绣线书香", "name": "限定无线装订本(绣线书香)", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "B5·中式刺绣", "pr": 32.8, "img": [], "note": "藏青底白酒双雀 + 清代短丝荷塘"}, {"z": "限定", "brand": "KOKUYO限定", "series": "浮生画卷", "name": "限定无线装订本(浮生画卷)", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "A5·世界名画", "pr": 24, "img": [], "note": "冲浪里/街巷/猫咪/骷髅"}, {"z": "限定", "brand": "KOKUYO限定", "series": "书写套装", "name": "A6限定书写套装", "cat": "本册", "sub": "书写套装", "spec": "套装", "col": "A6", "pr": 27, "img": [], "note": "5款经典用纸装订成册"}, {"z": "限定", "brand": "KOKUYO限定", "series": "限定新品TOP1", "name": "STUDY HOLIC B5无线装订本", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "古生物/古埃及/考古/海洋/人类", "pr": 17.5, "img": [], "note": "限量TOP1·各17.5元"}, {"z": "限定", "brand": "STUDY HOLIC", "series": "限定新品TOP1", "name": "两用书签(2WAY)", "cat": "工具", "sub": "书签", "spec": "书签", "col": "多主题", "pr": 9.5, "img": [], "note": ""}, {"z": "限定", "brand": "STUDY HOLIC", "series": "限定新品TOP1", "name": "测量野帐", "cat": "本册", "sub": "野帐", "spec": "野帐", "col": "古生物/考古/古埃及", "pr": 28.6, "img": [], "note": "硬壳 3mm方格 可盖章"}, {"z": "限定", "brand": "STUDY HOLIC", "series": "限定新品TOP1", "name": "双层分类收纳笔袋", "cat": "包袋", "sub": "笔袋", "spec": "笔袋", "col": "5主题", "pr": 40, "img": [], "note": ""}, {"z": "限定", "brand": "STUDY HOLIC", "series": "限定新品TOP1", "name": "托特包", "cat": "包袋", "sub": "托特包", "spec": "托特包", "col": "考古/古生物/古埃及/人类学", "pr": 52, "img": [], "note": ""}, {"z": "限定", "brand": "UHA×KOKUYO", "series": "糖果联名", "name": "无线装订本(糖果封面)", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "牛奶糖/酷露露等", "pr": 24, "img": [], "note": ""}, {"z": "限定", "brand": "UHA×KOKUYO", "series": "糖果联名", "name": "迷你收纳包", "cat": "包袋", "sub": "收纳包", "spec": "收纳包", "col": "葡萄酷露露", "pr": 29.8, "img": [], "note": ""}, {"z": "限定", "brand": "KOKUYO限定", "series": "mini系列", "name": "限定mini包", "cat": "包袋", "sub": "收纳包", "spec": "迷你包", "col": "米白帆布", "pr": 29.8, "img": [], "note": ""}, {"z": "限定", "brand": "KOKUYO限定", "series": "mini系列", "name": "mini波士顿包", "cat": "包袋", "sub": "书包", "spec": "波士顿包", "col": "mini", "pr": 29.8, "img": [], "note": ""}, {"z": "联名", "brand": "塔卡沙TYAKASHA", "series": "联名明细", "name": "Campus收纳包", "cat": "包袋", "sub": "收纳包", "spec": "收纳包", "col": "绿色/蓝色", "pr": 117.1, "img": [], "note": "210×135×25mm WSG-PC3M132"}, {"z": "联名", "brand": "塔卡沙TYAKASHA", "series": "联名明细", "name": "横开笔袋", "cat": "包袋", "sub": "笔袋", "spec": "笔袋", "col": "蓝色/白色/黄色", "pr": 54.4, "img": [], "note": "210×80×45mm WSG-PC3M322"}, {"z": "联名", "brand": "塔卡沙TYAKASHA", "series": "联名明细", "name": "Campus学院风背提包", "cat": "包袋", "sub": "书包", "spec": "背提包", "col": "深蓝/棕色", "pr": 198.8, "img": [], "note": "420×280×125mm WSG-SB3M16"}, {"z": "联名", "brand": "塔卡沙TYAKASHA", "series": "联名明细", "name": "网格口袋书包", "cat": "包袋", "sub": "书包", "spec": "书包", "col": "深蓝/黄色", "pr": 258.8, "img": [], "note": "约15.4L WSG-SB3M14"}, {"z": "联名", "brand": "塔卡沙TYAKASHA", "series": "联名明细", "name": "折叠伞", "cat": "伞具", "sub": "折叠伞", "spec": "伞", "col": "2色", "pr": 180, "img": [], "note": "约237g 防紫外线"}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "Campus扩容笔袋", "cat": "包袋", "sub": "笔袋", "spec": "笔袋", "col": "观星/吃饭", "pr": 57.8, "img": [], "note": "205×115×40mm WSG-PCFM373"}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "无线装订本", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "B5 / A5", "pr": null, "img": [], "note": "Campus日本进口原纸"}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "软线圈本", "cat": "本册", "sub": "软线圈本", "spec": "软线圈本", "col": "B5 / A6", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "牛皮纸四孔活页本", "cat": "本册", "sub": "活页本", "spec": "四孔活页本", "col": "B5 / A5", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "按动中性笔", "cat": "笔具", "sub": "圆珠笔", "spec": "0.5mm", "col": "多色", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "Campus原纸色修正带", "cat": "工具", "sub": "修正带", "spec": "修正带", "col": "标准", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "单片夹套装", "cat": "工具", "sub": "文件", "spec": "A4", "col": "一套4张", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "高旗将雄", "series": "熊の森生活", "name": "托特包", "cat": "包袋", "sub": "托特包", "spec": "托特包", "col": "单肩", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "无线装订本", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "B5·180°平摊", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "软线圈本", "cat": "本册", "sub": "软线圈本", "spec": "软线圈本", "col": "A6·360°翻转", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "两孔mini活页本", "cat": "本册", "sub": "活页本", "spec": "活页本", "col": "A7", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "按动中性笔", "cat": "笔具", "sub": "圆珠笔", "spec": "0.5mm双珠", "col": "多色", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "Campus原纸色修正带", "cat": "工具", "sub": "修正带", "spec": "修正带", "col": "标准", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "透明收纳包", "cat": "包袋", "sub": "收纳包", "spec": "收纳包", "col": "透明", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "GreenFlash Pixelook", "series": "像素风", "name": "限定金属挂件", "cat": "周边", "sub": "挂件", "spec": "挂件", "col": "12种图案", "pr": null, "img": [], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "Campus无线装订本", "cat": "本册", "sub": "无线装订本", "spec": "无线装订本", "col": "B5/A5/A6·满版/拼贴", "pr": null, "img": ["images/item0001.jpg", "images/item0002.jpg", "images/item0003.jpg", "images/item0004.jpg", "images/item0005.jpg", "images/item0006.jpg", "images/item0007.jpg", "images/item0008.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "Campus软线圈本", "cat": "本册", "sub": "软线圈本", "spec": "软线圈本", "col": "A5/A6", "pr": null, "img": ["images/item0009.jpg", "images/item0010.jpg", "images/item0011.jpg", "images/item0012.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "Campus螺旋本", "cat": "本册", "sub": "螺旋本", "spec": "螺旋本", "col": "A7", "pr": null, "img": ["images/item0013.jpg", "images/item0014.jpg", "images/item0015.jpg", "images/item0016.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "草稿本", "cat": "本册", "sub": "草稿本", "spec": "无线胶装", "col": "A5", "pr": null, "img": ["images/item0017.jpg", "images/item0018.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "高透明笔袋", "cat": "包袋", "sub": "笔袋", "spec": "笔袋", "col": "4款·托盘款", "pr": null, "img": ["images/item0019.jpg", "images/item0020.jpg", "images/item0021.jpg", "images/item0022.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "桌立式笔袋", "cat": "包袋", "sub": "笔袋", "spec": "笔盒笔袋2in1", "col": "多色", "pr": null, "img": ["images/item0023.jpg", "images/item0024.jpg", "images/item0025.jpg", "images/item0026.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "按动中性笔&修正带", "cat": "笔具", "sub": "圆珠笔", "spec": "0.5mm", "col": "转印图案", "pr": null, "img": ["images/item0027.jpg", "images/item0028.jpg", "images/item0029.jpg", "images/item0030.jpg", "images/item0031.jpg", "images/item0032.jpg", "images/item0033.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "HB三角铅笔&活动铅笔", "cat": "笔具", "sub": "铅笔", "spec": "三角/活动", "col": "多色", "pr": null, "img": ["images/item0034.jpg", "images/item0035.jpg", "images/item0036.jpg", "images/item0037.jpg", "images/item0038.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "角角乐橡皮", "cat": "工具", "sub": "橡皮", "spec": "角角乐", "col": "45°/90°", "pr": null, "img": ["images/item0039.jpg", "images/item0040.jpg", "images/item0041.jpg"], "note": ""}, {"z": "联名", "brand": "小猪佩奇", "series": "童趣甜心&永恒经典", "name": "学生套尺", "cat": "工具", "sub": "尺子", "spec": "套尺", "col": "5件套", "pr": null, "img": ["images/item0042.jpg", "images/item0043.jpg", "images/item0044.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "便签本", "cat": "本册", "sub": "便签本", "spec": "便签本", "col": "蜡笔风", "pr": null, "img": ["images/item0045.jpg", "images/item0046.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "便利贴&胶带", "cat": "贴纸", "sub": "便利贴/胶带", "spec": "装饰", "col": "多款", "pr": null, "img": ["images/item0047.jpg", "images/item0048.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "圆珠笔(亚克力挂件)", "cat": "笔具", "sub": "圆珠笔", "spec": "圆珠笔", "col": "透明", "pr": null, "img": ["images/item0049.jpg", "images/item0050.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "亚克力夹子", "cat": "工具", "sub": "夹子", "spec": "夹子", "col": "多款", "pr": null, "img": ["images/item0051.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "A4透明文件夹", "cat": "工具", "sub": "文件", "spec": "三口袋", "col": "透明", "pr": null, "img": ["images/item0052.jpg", "images/item0053.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "PVC收纳袋", "cat": "包袋", "sub": "收纳包", "spec": "PVC", "col": "多款", "pr": null, "img": ["images/item0054.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "折叠收纳袋", "cat": "包袋", "sub": "收纳包", "spec": "折叠", "col": "轻便", "pr": null, "img": ["images/item0055.jpg", "images/item0056.jpg", "images/item0057.jpg"], "note": ""}, {"z": "代理", "brand": "北村人×GreenFlash", "series": "首次入驻", "name": "托特包(刺绣)", "cat": "包袋", "sub": "托特包", "spec": "托特包", "col": "多款", "pr": null, "img": ["images/item0058.jpg", "images/item0059.jpg", "images/item0060.jpg"], "note": ""}, {"z": "代理", "brand": "GreenFlash未知生物", "series": "第2弹", "name": "方形便签本", "cat": "本册", "sub": "便签本", "spec": "透明PVC", "col": "神秘生物", "pr": null, "img": ["images/item0061.jpg", "images/item0062.jpg", "images/item0063.jpg", "images/item0064.jpg"], "note": ""}, {"z": "代理", "brand": "GreenFlash未知生物", "series": "第2弹", "name": "七款极光贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "防水闪粉", "col": "7款", "pr": null, "img": ["images/item0065.jpg", "images/item0066.jpg"], "note": ""}, {"z": "代理", "brand": "GreenFlash未知生物", "series": "第2弹", "name": "PVC迷你收纳袋", "cat": "包袋", "sub": "收纳包", "spec": "PVC铁片", "col": "多款", "pr": null, "img": ["images/item0067.jpg", "images/item0068.jpg", "images/item0069.jpg"], "note": ""}, {"z": "代理", "brand": "GreenFlash未知生物", "series": "第2弹", "name": "方形收纳包", "cat": "包袋", "sub": "收纳包", "spec": "绒布", "col": "多款", "pr": null, "img": ["images/item0070.jpg", "images/item0071.jpg", "images/item0072.jpg", "images/item0073.jpg"], "note": ""}, {"z": "代理", "brand": "艾普克", "series": "萌宠便签本", "name": "可折叠萌宠便签本", "cat": "本册", "sub": "便签本", "spec": "可折叠站立", "col": "3款猫咪", "pr": null, "img": ["images/item0074.jpg", "images/item0075.jpg", "images/item0076.jpg", "images/item0077.jpg", "images/item0078.jpg", "images/item0079.jpg", "images/item0080.jpg", "images/item0081.jpg", "images/item0082.jpg", "images/item0083.jpg"], "note": "可平躺可折叠站立 背面动物头像咬合"}, {"z": "代理", "brand": "艾普克", "series": "撕撕乐", "name": "撕撕乐卷卷贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "超长卷卷", "col": "循环图案", "pr": null, "img": ["images/item0084.jpg", "images/item0085.jpg", "images/item0086.jpg", "images/item0087.jpg", "images/item0088.jpg", "images/item0089.jpg", "images/item0090.jpg", "images/item0091.jpg", "images/item0092.jpg", "images/item0093.jpg", "images/item0094.jpg"], "note": "随用随撕 图案循环"}, {"z": "代理", "brand": "艾普克", "series": "模切", "name": "萌趣模切分装贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "预裁形状", "col": "多主题", "pr": null, "img": ["images/item0095.jpg", "images/item0096.jpg", "images/item0097.jpg", "images/item0098.jpg", "images/item0099.jpg", "images/item0100.jpg", "images/item0101.jpg", "images/item0102.jpg"], "note": "一撕即完整小可爱 无白边"}, {"z": "代理", "brand": "NB株式会社", "series": "夏日系列", "name": "夏日系列异形明信片", "cat": "纸品", "sub": "明信片", "spec": "异形", "col": "企鹅/北极熊/海豹", "pr": null, "img": ["images/item0103.jpg", "images/item0104.jpg", "images/item0105.jpg", "images/item0106.jpg"], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "贺卡", "name": "贺卡 unbox 曲奇礼盒", "cat": "纸品", "sub": "贺卡", "spec": "铁盒", "col": "复古绿", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "贴纸", "name": "My mood 和纸贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "和纸", "col": "啾啾/小兔/猫咪/修勾", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "信纸", "name": "悠闲小动物日常 夜晚 迷你信纸", "cat": "纸品", "sub": "信纸", "spec": "迷你信纸", "col": "啾啾团子/企鹅", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "盒装贴纸", "name": "RESSA PANDA BOOKS 盒装贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "盒装", "col": "熊猫店长/小猫/水獭", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "贴纸", "name": "啾言啾语 贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "日常", "col": "小鸟碎碎念", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "便签本", "name": "便签本(毛茸茸脑袋)", "cat": "本册", "sub": "便签本", "spec": "便签本", "col": "多款", "pr": null, "img": ["images/item0045.jpg", "images/item0046.jpg"], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "鹦鹉信纸", "name": "Pyokotto 迷你信纸 鹦鹉", "cat": "纸品", "sub": "信纸", "spec": "迷你信纸", "col": "粉紫暮色", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "明信片", "name": "Creald 明信片 山雀和菓子", "cat": "纸品", "sub": "明信片", "spec": "明信片", "col": "雪白糯米", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "便签本", "name": "猫咪日常 便签本 茂三郎", "cat": "本册", "sub": "便签本", "spec": "昭和咖啡店", "col": "复古", "pr": null, "img": [], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "山野町内会", "name": "山野町内会 信纸", "cat": "纸品", "sub": "信纸", "spec": "信纸", "col": "露营/星空/划船", "pr": null, "img": ["images/item0107.jpg", "images/item0108.jpg", "images/item0109.jpg", "images/item0110.jpg"], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "山野町内会", "name": "山野町内会 便签本", "cat": "本册", "sub": "便签本", "spec": "便签本", "col": "小熊/松鼠", "pr": null, "img": ["images/item0111.jpg", "images/item0112.jpg", "images/item0113.jpg", "images/item0114.jpg", "images/item0115.jpg", "images/item0116.jpg"], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "山野町内会", "name": "山野町内会 明信片", "cat": "纸品", "sub": "明信片", "spec": "明信片", "col": "企鹅等", "pr": null, "img": ["images/item0117.jpg", "images/item0118.jpg", "images/item0119.jpg", "images/item0120.jpg", "images/item0121.jpg", "images/item0122.jpg", "images/item0123.jpg", "images/item0124.jpg"], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "山野町内会", "name": "山野町内会 和纸贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "和纸", "col": "狐狸等", "pr": null, "img": ["images/item0125.jpg", "images/item0126.jpg", "images/item0127.jpg", "images/item0128.jpg", "images/item0129.jpg", "images/item0130.jpg", "images/item0131.jpg", "images/item0132.jpg"], "note": ""}, {"z": "代理", "brand": "NB株式会社", "series": "山野町内会", "name": "山野町内会 贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "贴纸", "col": "狐狸等", "pr": null, "img": ["images/item0133.jpg", "images/item0134.jpg", "images/item0135.jpg", "images/item0136.jpg", "images/item0137.jpg", "images/item0138.jpg", "images/item0139.jpg", "images/item0140.jpg"], "note": ""}, {"z": "代理", "brand": "ZOOm in Animals", "series": "动物便签", "name": "异形便签套装", "cat": "本册", "sub": "便签本", "spec": "异形套装", "col": "多款", "pr": null, "img": ["images/item0141.jpg", "images/item0142.jpg", "images/item0143.jpg", "images/item0144.jpg", "images/item0145.jpg", "images/item0146.jpg"], "note": ""}, {"z": "代理", "brand": "ZOOm in Animals", "series": "动物信纸", "name": "迷你异形信纸套装", "cat": "纸品", "sub": "信纸", "spec": "迷你异形", "col": "多款", "pr": null, "img": ["images/item0147.jpg", "images/item0148.jpg", "images/item0149.jpg", "images/item0150.jpg", "images/item0151.jpg", "images/item0152.jpg", "images/item0153.jpg"], "note": ""}, {"z": "代理", "brand": "ZOOm in Animals", "series": "信纸", "name": "迷你信纸套装", "cat": "纸品", "sub": "信纸", "spec": "迷你信纸", "col": "多款", "pr": null, "img": ["images/item0154.jpg", "images/item0155.jpg", "images/item0156.jpg", "images/item0157.jpg"], "note": ""}, {"z": "代理", "brand": "ZOOm in Animals", "series": "贴纸", "name": "和纸贴纸", "cat": "贴纸", "sub": "贴纸", "spec": "和纸", "col": "动物", "pr": null, "img": ["images/item0158.jpg", "images/item0159.jpg", "images/item0160.jpg", "images/item0161.jpg", "images/item0162.jpg", "images/item0163.jpg", "images/item0164.jpg"], "note": ""}, {"z": "代理", "brand": "ZOOm in Animals", "series": "便签", "name": "异形便签", "cat": "本册", "sub": "便签本", "spec": "异形", "col": "动物", "pr": null, "img": ["images/item0165.jpg", "images/item0166.jpg", "images/item0167.jpg", "images/item0168.jpg", "images/item0169.jpg", "images/item0170.jpg"], "note": ""}];
+
+const ZONES = {"限定":0,"联名":1,"代理":2,"攻略":3};
+let state = {z:"限定", brand:"", cat:"", spec:"", q:""};
+
+const CATS = {
+ "限定":["全部","本册","包袋","周边","工具"],
+ "联名":["全部","本册","包袋","笔具","工具","伞具","周边"],
+ "代理":["全部","本册","包袋","贴纸","纸品","笔具","工具"]
+};
+const SPECS = ["无线装订本","软线圈本","螺旋本","活页本","野帐","便签本","草稿本","笔袋","托特包","书包","收纳包","迷你包","信纸","明信片","贴纸","和纸贴纸"];
+
+const COLORHEX = {"红":"#e0503c","红棕":"#b4552f","橙":"#e8843a","黄":"#e6b93c","黄绿":"#b3c94a","绿":"#5aa469",
+ "草绿":"#7cb56a","绿蓝":"#3e9a8f","蓝":"#4a7fb5","深蓝":"#36517d","藏青":"#33406b","天蓝":"#6fb3d9",
+ "紫":"#8a6bb5","粉":"#e58aa6","粉红":"#e58aa6","棕":"#9a6d4a","褐":"#8a5a36","白":"#ffffff","米白":"#f2ead9",
+ "灰":"#9a9a9a","黑":"#333333","金":"#cf9c3a","透明":"#dfe7ec","复古":"#b18452","米":"#ecdcc0"};
+function ccolor(token){
+  const t = token.replace(/[0-9()（）]/g,"").replace(/色$|款$|样式$|图案$|主题|风|系列/g,"");
+  if(COLORHEX[t]){const c=COLORHEX[t];return {c:c, light:c==="#ffffff"||c==="#f2ead9"}}
+  for(const k in COLORHEX){ if(t.includes(k)){ const c=COLORHEX[k]; return {c,light:c==="#ffffff"||c==="#f2ead9"}} }
+  return null;
+}
+
+function splitCol(col){
+  return String(col||"").split(/[\/、,，;；&＋+·\s]+/).filter(x=>x&&x.length>0);
+}
+
+function esc(s){return String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
+
+function searchAll(p){ const q=state.q.trim().toLowerCase();
+  if(!q) return true;
+  const hay=[p.brand,p.series,p.name,p.sub,p.spec,p.col,p.note].join(" ").toLowerCase();
+  return hay.includes(q);
+}
+function filterZone(zone){ return DATA.filter(p=>p.z===zone && (!state.brand||p.brand===state.brand) && (!state.cat||p.cat===state.cat) && (!state.spec||String(p.spec).includes(state.spec)) && searchAll(p)); }
+
+function dots(html){
+  const n=html; let out="";
+  for(let i=0;i<n;i++)out+=`<i${i===0?' class="on"':''}></i>`;
+  return out;
+}
+
+function cardHTML(p){
+  let shot;
+  if(p.img.length){
+    let imgs=p.img.map((s,i)=>`<img src="${s}" loading="lazy" onpointerup="sw(this)">`).join("");
+    shot=`<div class="cshot"><div class="imgs">${imgs}</div>${p.img.length>1?`<div class="dots">${dots(p.img.length)}</div>`:""}</div>`;
+  }else{
+    shot=`<div class="cshot"><div class="placeholder">
+      <div class="ring"><div class="big">${esc(p.name.replace(/[限定手机淘宝]/g,"").slice(0,1))}</div></div>
+      <div class="sm">${esc(p.name)}</div></div><div class="badge">${esc(p.sub||p.cat)}</div></div>`;
+  }
+  let pr="";
+  if(p.pr!=null && p.pr!==undefined){
+    const dec=Number.isInteger(p.pr)?'':'';
+    pr=`<div class="cprice"><span class="yen">¥</span><b>${p.pr}</b></div>`;
+  }else{
+    pr=`<div class="cprice"><span class="flag">${p.brand==='KOKUYO限定'||p.brand.startsWith('STUDY')? '现场限定':'进店见'}</span></div>`;
+  }
+  let tags="";
+  splitCol(p.col).slice(0,6).forEach(t=>{
+    const cc=ccolor(t);
+    if(cc){ tags+=`<span class="tag c" style="background:${cc.c};color:${cc.light?'#4a463f':'#fff'}">${esc(t)}</span>`; }
+    else{ tags+=`<span class="tag">${esc(t)}</span>`; }
+  });
+  const note = p.note?`<div class="cnote">${esc(p.note)}</div>`:"";
+  return `<div class="card">
+    ${shot}
+    <div class="cbody">
+      <div class="cname">${esc(p.name)}</div>
+      ${pr}
+      ${tags?`<div class="tags">${tags}</div>`:""}
+      ${note}
+    </div></div>`;
+}
+
+function renderShots(container){
+  container.querySelectorAll(".imgs").forEach(w=>w.addEventListener("scroll",()=>{
+    const d=Math.round(w.scrollLeft/w.clientWidth);
+    const dots=w.parentElement.querySelector(".dots");
+    if(dots){[...dots.children].forEach((i,k)=>i.classList.toggle("on",k===d));}
+  }));
+}
+window.sw=function(img){
+  const w=img.parentElement; w.scrollBy({left:w.clientWidth,top:0,behavior:"smooth"});
+};
+
+function groupBy(list,key){
+  const m=new Map(); list.forEach(o=>{ const k=o[key]; if(!m.has(k))m.set(k,[]); m.get(k).push(o); });
+  return [...m.entries()];
+}
+
+function render(){
+  const z=state.z;
+  if(z==="攻略"){ renderGuide(); return; }
+  const zone=filterZone(z);
+  const q=state.q.trim(); if(q) document.getElementById("qcount").textContent=`${zone.length}条`;
+  let fh=`<div class="row">`+
+    CATS[z].map(c=>`<button class="chip${state.cat===c?' on':''}" onclick="setCat('${c}')">${c}</button>`).join("")+`</div>`;
+  if(state.cat===""||state.cat==="全部"||state.cat==="本册"||state.cat==="包袋"){
+    fh+=`<div class="row">`+SPECS.map(s=>{
+      const count=zone.filter(p=>String(p.spec).includes(s)).length;
+      return count?`<button class="chip spec${state.spec===s?' on':''}" onclick="setSpec('${esc(s)}')">${s} ${count}</button>`:"";
+    }).join("")+`</div>`;
+  }
+  document.getElementById("filters").innerHTML=fh;
+
+  const groups=groupBy(zone,"brand");
+  let html="";
+  if(!groups.length){ html=`<div class="empty">没有匹配的藏品，换个关键词或筛选</div>`; }
+  groups.forEach(([brand,list])=>{
+    const on=state.brand===brand;
+    html+=`<div class="group">
+      <div class="ghead" onclick="toggleBrand('${esc(brand)}')">
+        <span class="ln"></span><span class="diamond">◆</span>
+        <div class="gt"><div class="bn">${esc(brand)}<span class="g">&amp;</span></div><div class="sn">${esc(list[0].series||"")}${on?' · 已筛选':''}</div></div>
+        <span class="diamond">◆</span><span class="ln r"></span>
+        <span class="cnt">${list.length}件</span>
+      </div>
+      <div class="grid">${list.map(cardHTML).join("")}</div></div>`;
+  });
+  const c=document.getElementById("content"); c.innerHTML=html;
+  renderShots(c);
+}
+
+function setCat(c){ state.cat=(c==="全部"?"":c); render(); }
+function setSpec(s){ state.spec=(state.spec===s?"":s); render(); }
+function toggleBrand(b){ state.brand=(state.brand===b?"":b); render(); }
+
+function renderGuide(){
+  document.getElementById("filters").innerHTML="";
+  document.getElementById("qcount").textContent="";
+  const c=document.getElementById("content");
+  c.innerHTML=`<div class="guide">
+   ${g("入口福利 · 宣传册&门票","#C49C17",[
+      "<b>无需预约</b> · 免费发放<b>纸质宣传册</b>与<b>精致门票</b>，内含新品 / 活动 / 场地地图",
+      "Campus STYLE 小程序 <b>V1 会员免费领 HAKU 纪念徽章</b>（上海 9,000 枚，赠完即止）",
+      {img:["g_brochure.jpg","g_ticket.jpg"],cap:"入口免费发放的纸质宣传册 & 门票"}
+    ])}
+   ${g("馆内漫游 · 五大展馆","#a88415",[
+      "<b>① 奇思探索馆</b>（入口左手）｜首发 TYAKASHA 联名、高旗将雄联名；热门加藤木联名、小猪佩奇联名",
+      "<b>② 自然科学馆</b>｜Green Flash × STUDY HOLIC 系列（人气 TOP1），古生物 / 古埃及 / 海洋演变",
+      "<b>③ 经典馆藏厅</b>｜HAKU 限定书写套装、纸张投票、可翻页 Campus 历史墙、KOKUYO WP 系列、新品云白 / 寿司点点胶 / 甜品 / 透明文具系列",
+      "<b>④ 触感研究室</b>｜2026 全新收纳系列 · Earth Colors 系列",
+      "<b>⑤ 奇妙珍藏馆</b>（入口右手）｜HAKU 限定套装 / 绣线书香&浮生画卷 / UHA 联名 / mini 包；Pixelook 联名 & NB / GreenFlash / 艾普克 100+ 代理品"
+    ])}
+   ${g("四城场次 · 快闪番外","#2B6F61",[
+      {tbl:[["上海","长宁来福士钟楼 · 8/21-23 · 10:00-22:00"],["深圳","领展中心城G层 · 五~六10:00-22:30 / 日10:00-22:00"],["成都","来福士广场B1 · 8/21-23 · 10:00-22:00"],["大连","柏威年购物中心一楼 · 8/21-23 · 9:30-21:30"]]},
+      "番外：KOKUYO Fair 快闪巡回 9 城（武汉/长沙/厦门/北京/衡水/合肥/天津/大连/西安）"
+    ])}
+   ${g("插画师签售","#C49C17",[
+      "<b>满150元 + 含对应合作款</b> 可签，每日限量 50 名",
+      {tbl:[["加藤木麻莉","11:00–12:00"],["高旗将雄","13:00–14:00"],["TYAKASHA/童云","15:00–16:00"]]},
+      "签绘<b>仅上海会场</b>；其他三城发放老师设计的复制签绘"
+    ])}
+   ${g("消费满赠 & 会员徽章","#2B6F61",[
+      {tbl:[["满50元","限定贴纸包 ×1"],["满100元","限定拉链小包 ×1"],["满200元","托特包 ×1"]]},
+      "满150元享两档（贴纸包+拉链小包）；拉链小包每日限1个",
+      "<b>V2-V4 会员</b>另得<b>金属纪念徽章</b>1枚（上海 500 枚，一个ID限1枚，赠完即止）"
+    ])}
+   ${g("扭蛋","#2B6F61",["凭<b>当日小票满100元</b>兑扭蛋币→复古冰箱贴1枚；上海场 3,600 枚 · 每人每天限3次",{img:["g_gacha.webp"],cap:"扭蛋币兑换 · 复古冰箱贴"}])}
+   ${g("印章盖章","#C49C17",["会场 B 区免费盖章：<b>4城限定（当地专属） + 4枚主题限定（4城通用）</b>；美罗城店另有限定章",{img:["g_stamp.webp"],cap:"会场 B 区盖章区"}])}
+   ${g("免费赠礼 · 冰箱贴","#a88415",["关注国誉各社媒→随机1个；现场拍3张+发笔记带 #2026国誉博→随机3个（可叠加）",{img:["g_magnet_1.webp","g_magnet_2.webp"],cap:"场外 C/D 免费赠礼 · 冰箱贴"}])}
+   ${g("大头贴 · 拍照","#2B6F61",["E 区（上海限定）：带 #定格国誉博 发笔记→优惠20元拍（原39.9）；集满15赞→免费1次<br>成都会场也有大头贴活动，以现场规则为准",{img:["g_photo.webp"],cap:"会场限定 · 纪念大头贴拍照机"}])}
+   ${g("拍照打卡点 F","#a88415","场外草坪 F 区主题装置超好拍；钟楼上超大「Campus 本子」，记得拍下你「誉」见文具的奇妙时刻")}
+   ${g("塔卡沙手工小屋 G","#C49C17",["手工挂件 / 烫画斜挎包<br>满300→DIY挂件 / 满500→斜挎包烫画；也可现场付费：挂件68 / 斜挎包128",{img:["g_hut_1.webp","g_hut_2.webp","g_hut_3.webp"],cap:"场外草坪 · 塔卡沙手工小屋"}])}
+   ${g("线上抽奖","#a88415","晒印章 @品牌带#誉见国誉博印章#→9/1抽5位；晒藏品带#誉见文具藏品#→抽10位")}
+   <div class="gcard" style="text-align:center"><div class="gb" style="padding:14px">信息以现场公告为准</div></div>
+  </div>`;
+}
+function g(title,color,content){
+  let body=Array.isArray(content)?content:[content];
+  let b="";
+  body.forEach(item=>{
+    if(typeof item==="string"){ b+=`<p>${item}</p>`; }
+    else if(item.tbl){ b+=`<table class="tbl">`+item.tbl.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")+`</table>`; }
+    else if(item.img){
+      const figs=item.img.map((f,i)=>`<figure${f.length===1?' class="one"':''}><img src="guide/${f}" loading="lazy"><figcaption>${f.length===1?esc(item.cap||""):i===0?esc(item.cap||""):""}</figcaption></figure>`).join("");
+      b+=`<div class="gimg">${figs}</div>`;
+    }
+  });
+  return `<div class="gcard"><div class="gh"><span class="dot" style="background:${color}"></span>${title}</div><div class="gb">${b}</div></div>`;
+}
+
+// nav
+document.getElementById("nav").addEventListener("click",e=>{
+  const btn=e.target.closest("button"); if(!btn)return;
+  const z=btn.dataset.z; state.z=z;
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b===btn));
+  state.brand=""; state.cat=""; state.spec=""; document.getElementById("q").value=""; state.q="";
+  document.getElementById("content").scrollTop=0; document.getElementById("content").scrollIntoView({behavior:"smooth"});
+  render();
+});
+document.getElementById("q").addEventListener("input",e=>{ state.q=e.target.value; render(); });
+
+document.addEventListener("DOMContentLoaded",()=>{ render(); });
+</script>
+</body>
+</html>
