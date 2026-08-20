@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#08435F">
-<title>国誉博 2026 · 上海 · 好奇博物馆</title>
+<title>2026 国誉博</title>
 <style>
 :root{
   --navy:#08435F; --navy2:#0b4d6c; --dk:#05283a;
@@ -29,7 +29,7 @@ html,body{margin:0;padding:0}
 body{background:var(--cream);color:var(--ink);
   font-family:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,sans-serif;
   -webkit-font-smoothing:antialiased;letter-spacing:.01em}
-.app{max-width:640px;margin:0 auto;padding-bottom:92px;position:relative}
+.app{max-width:640px;margin:0 auto;padding-bottom:120px;position:relative}
 
 /* ===== 顶部 星空展馆 ===== */
 .hero{position:relative;background:
@@ -129,7 +129,7 @@ body{background:var(--cream);color:var(--ink);
 .cnote{margin-top:7px;font-size:11px;color:var(--sub);line-height:1.45}
 
 /* ===== 攻略 手册 ===== */
-.guide{padding:6px 14px}
+.guide{padding:6px 14px 40px}
 .gcard{background:#fffdf6;border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden;
   box-shadow:var(--shadow)}
 .gcard .gh{padding:13px 14px 11px;font-size:15px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:9px;
@@ -378,7 +378,7 @@ function g(title,color,content){
     if(typeof item==="string"){ b+=`<p>${item}</p>`; }
     else if(item.tbl){ b+=`<table class="tbl">`+item.tbl.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")+`</table>`; }
     else if(item.img){
-      const figs=item.img.map((f,i)=>`<figure${f.length===1?' class="one"':''}><img src="guide/${f}?v=2" loading="lazy" decoding="async"><figcaption>${f.length===1?esc(item.cap||""):i===0?esc(item.cap||""):""}</figcaption></figure>`).join("");
+      const figs=item.img.map((f,i)=>`<figure${item.img.length===1?' class="one"':''}><img src="guide/${f}?v=2" loading="lazy" decoding="async"><figcaption>${item.img.length===1?esc(item.cap||""):i===0?esc(item.cap||""):""}</figcaption></figure>`).join("");
       b+=`<div class="gimg">${figs}</div>`;
     }
   });
